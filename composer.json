@@ -1,0 +1,15 @@
+{
+    "name": "www-data/app",
+    "autoload": {
+        "psr-4": {
+            "Negozio\\": "src/classes"
+        }
+    },
+    "authors": [
+        {
+            "name": "Davide",
+            "email": "info@davideladisa.it"
+        }
+    ],
+    "require": {}
+}

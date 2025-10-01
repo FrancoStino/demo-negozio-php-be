@@ -1,0 +1,22 @@
+name: demo-negozio-php
+recipe: lamp
+config:
+  webroot: .
+  php: '8.2'
+
+services:
+  appserver:
+    type: php:8.2
+    webroot: .
+    xdebug: false
+    via: nginx
+    config:
+      php: .lando/php.ini
+    build:
+      - composer install
+
+tooling:
+  composer:
+    service: appserver
+  php:
+    service: appserver
