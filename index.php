@@ -48,7 +48,7 @@ while ( !$exit ) {
             $login_arr = $negozio -> entra ( $email, $password );
             $login     = $login_arr[ 'success' ];
             $utente    = $login_arr[ 'utente' ];
-            if ( !$login ) {
+            if ( !$login || !$utente ) {
                 echo "Credenziali non valide\n";
             } else {
                 echo "Benvenuto " . $utente -> getNome () . " " . $utente -> getCognome () . "\n";
@@ -67,7 +67,7 @@ while ( !$exit ) {
                                     $prodotto = $negozio -> getProdotto ( $nome );
                                     if ( $prodotto == null ) {
                                         echo "Prodotto non trovato\n";
-                                        
+
                                     }
                                     $negozio -> acquistaProdotto ( $prodotto, $utente -> getCartaCredito (), 1 );
                                     break;
