@@ -38,9 +38,10 @@ $negozio = new Negozio(
 
 $exit = false;
 while ( !$exit ) {
-    $comando = strtolower ( ( trim ( readline ( 'Sei registrato? (y/n) ' ) ) ) );
+	$comando = strtolower ( ( trim ( readline ( 'Sei registrato? (y/n/exit) ' ) ) ) );
     switch ( $comando ) {
-        case 'y' || 's':
+	    case 'y':
+	    case 's':
             echo "Login\n";
             $email    = strtolower ( ( trim ( readline ( 'Inserire email: ' ) ) ) );
             $password = strtolower ( ( trim ( readline ( 'Inserire password: ' ) ) ) );
@@ -64,12 +65,14 @@ while ( !$exit ) {
                                 case 'acquistaprodotto':
                                     $nome = ( trim ( readline ( 'Inserire nome: ' ) ) );
 
+	                                $quantita = (int) trim ( readline ( 'Inserire quantita: ' ) );
+
                                     $prodotto = $negozio -> getProdotto ( $nome );
                                     if ( $prodotto == null ) {
                                         echo "Prodotto non trovato\n";
 
                                     }
-                                    $negozio -> acquistaProdotto ( $prodotto, $utente -> getCartaCredito (), 1 );
+	                                $negozio -> acquistaProdotto ( $prodotto, $utente -> getCartaCredito (), $quantita );
                                     break;
 
                                 case 'listaprodotti':
@@ -122,7 +125,33 @@ while ( !$exit ) {
             break;
         case 'n':
             echo "Registrati\n";
-            break;
+	        $nome        = strtolower ( ( trim ( readline ( 'Inserire nome: ' ) ) ) );
+	        $cognome     = strtolower ( ( trim ( readline ( 'Inserire cognome: ' ) ) ) );
+	        $email       = strtolower ( ( trim ( readline ( 'Inserire email: ' ) ) ) );
+	        $password    = strtolower ( ( trim ( readline ( 'Inserire password: ' ) ) ) );
+	        $tipo_utente = strtolower ( ( trim ( readline ( 'Inserire tipo utente (cliente/operatore): ' ) ) ) );
+	        $tipo_utente = $tipo_utente === 'cliente' ? 1 : 2;
+
+	        switch ( $tipo_utente ) {
+		        case 1:
+			        $area     = strtolower ( ( trim ( readline ( 'Inserire area: ' ) ) ) );
+			        $mansione = strtolower ( ( trim ( readline ( 'Inserire mansione: ' ) ) ) );
+			        $utente   = new Operatore ( $nome, $cognome, $email, $password, $tipo_utente, $area, $mansione );
+			        break;
+		        case 2:
+			        $indirizzoConsegna = strtolower ( ( trim ( readline ( 'Inserire indirizzo di consegna: ' ) ) ) );
+			        $numeroCarta       = strtolower ( ( trim ( readline ( 'Inserire numero carta: ' ) ) ) );
+			        $scadenza          = strtolower ( ( trim ( readline ( 'Inserire scadenza carta: ' ) ) ) );
+			        $cartaCredito      = new CartaCredito ( $numeroCarta, $scadenza );
+			        $utente            = new Cliente ( $nome, $cognome, $email, $password, $tipo_utente, $indirizzoConsegna, $cartaCredito );
+			        break;
+		        default:
+			        echo "Tipo utente non valido\n";
+			        break;
+	        }
+	        $negozio -> registrati ( $utente );
+	        echo "Registrazione completata\n";
+	        break;
         case 'exit':
             $exit = true;
             echo "Arrivederci!\n";
