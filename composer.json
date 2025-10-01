@@ -11,5 +11,7 @@
             "email": "info@davideladisa.it"
         }
     ],
-    "require": {}
+    "require": {
+        "ext-readline": "*"
+    }
 }

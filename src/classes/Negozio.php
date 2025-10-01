@@ -2,7 +2,6 @@
 
 namespace Negozio;
 
-
 class Negozio
 {
     private $listaProdotti;
@@ -82,9 +81,9 @@ class Negozio
      * @param string $email
      * @param string $password
      *
-     * @return array
+     * @return array{success: bool, utente: Utente|null}
      */
-    public function entra ( $email, $password )
+    public function entra ( $email, $password ) : array
     {
         $find   = false;
         $utente = null;
@@ -106,7 +105,7 @@ class Negozio
         }
 
         return [
-            'find'   => $find,
+            'success' => $find,
             'utente' => $utente,
         ];
     }
