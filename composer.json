@@ -11,6 +11,11 @@
             "email": "info@davideladisa.it"
         }
     ],
+    "config": {
+        "platform": {
+            "php": "8.4"
+        }
+    },
     "require": {
         "ext-readline": "*"
     }
