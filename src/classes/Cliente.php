@@ -6,7 +6,10 @@ class Cliente extends Utente
 {
 
     private              $indirizzoConsegna;
-    private CartaCredito $cartaCredito;
+    /**
+     * @var CartaCredito
+     */
+    private $cartaCredito;
 
     public function __construct ( $nome, $cognome, $email, $password, $tipo_utente, $indirizzoConsegna, CartaCredito $cartaCredito )
     {
